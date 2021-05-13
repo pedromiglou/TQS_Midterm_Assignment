@@ -1,0 +1,52 @@
+<h2>Air Quality:</h2>
+<form action="." method="post" class="fix" [formGroup]="countryForm" (ngSubmit)="getData()">
+  <div class="form-group">
+    <div style="margin: 1%" *ngIf="countries.length>0">
+      <label for="country">Country:</label>
+      <select id="country" class="form-control" formControlName="country" style="width:15%">
+        <option *ngFor="let country of countries" value={{country}}>{{country}}</option>
+        <option value=""></option>
+      </select>
+    </div>
+
+    <div style="margin: 1%" *ngIf="states.length>0">
+      <label for="state">State:</label>
+      <select id="state" class="form-control" formControlName="state" style="width:15%" >
+        <option *ngFor="let state of states" value={{state}}>{{state}}</option>
+        <option value=""></option>
+      </select>
+    </div>
+
+    <div style="margin: 1%" *ngIf="cities.length>0">
+      <label for="city">City:</label>
+      <select id="city" class="form-control" formControlName="city" style="width:15%" >
+        <option *ngFor="let city of cities" value={{city}}>{{city}}</option>
+        <option value=""></option>
+      </select>
+    </div>
+
+  </div>
+  <div style="margin: 1%" *ngIf="countryForm.value.city!='' && countryForm.value.state!=''&& countryForm.value.country!=''">
+    <button id="aqbutton" type="submit" value="getData" class="btn btn-success" name="getData">Get Air Quality</button>
+
+    <div *ngIf="airQuality.maincn!=null">
+      <p id="p_humidity">Humidity: {{airQuality.humidity}}</p>
+      <p id="p_us_air_quality_index">US Air Quality Index: {{airQuality.aqius}}</p>
+      <p id="p_main_pollutant_for_us_aqi">Main pollutant for US AQI: {{airQuality.mainus}}</p>
+      <p id="p_chinese_air_quality_index">Chinese Air Quality Index: {{airQuality.aqicn}}</p>
+      <p id="p_main_pollutant_for_chinese_aqi">Main pollutant for Chinese AQI: {{airQuality.maincn}}</p>
+    </div>
+
+  </div>
+
+
+</form>
+
+<h2>API Statistics:</h2>
+<div style="margin: 1%">
+  <p id="p_count">Count: {{stats.count}}</p>
+  <p id="p_hits">Hits: {{stats.hits}}</p>
+  <p id="p_misses">Misses: {{stats.misses}}</p>
+  <button id="statsbutton" class="btn btn-success" (click)="getStatistics()">Get Updated Statistics</button>
+</div>
+
