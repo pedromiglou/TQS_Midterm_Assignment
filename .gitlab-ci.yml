@@ -9,7 +9,7 @@ sonarcloud-check:
       - .sonar/cache
   script:
     - cd MidtermAssignment
-    - mvn verify sonar:sonar
+    - mvn verify sonar:sonar -Dtest=\!Midterm*
   only:
     - merge_requests
     - master
