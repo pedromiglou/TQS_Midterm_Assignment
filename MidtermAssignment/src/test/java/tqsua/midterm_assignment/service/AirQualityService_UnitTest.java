@@ -65,9 +65,9 @@ class AirQualityService_UnitTest {
 
     @Test
     void whenGettingStatistics_thenItShouldReturnStatistics() {
-        assertThat(service.getStatistics().get("count")).isEqualTo(3);
-        assertThat(service.getStatistics().get("misses")).isEqualTo(2);
-        assertThat(service.getStatistics().get("hits")).isEqualTo(1);
+        assertThat(service.getStatistics()).hasFieldOrPropertyWithValue("count", 3);
+        assertThat(service.getStatistics()).hasFieldOrPropertyWithValue("misses", 2);
+        assertThat(service.getStatistics()).hasFieldOrPropertyWithValue("hits", 1);
         Mockito.verify(cache, VerificationModeFactory.times(3)).getCount();
         Mockito.verify(cache, VerificationModeFactory.times(3)).getMisses();
         Mockito.verify(cache, VerificationModeFactory.times(3)).getHits();
