@@ -8,6 +8,7 @@ import tqsua.midterm_assignment.model.AirQuality;
 
 import java.util.HashMap;
 
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,7 +28,7 @@ public class AirQualityService {
     }
 
     public AirQuality getAirQualityByCity(String country, String state, String city) {
-        AirQuality aq = cache.getAirQuality(country, state, city);
+        var aq = cache.getAirQuality(country, state, city);
         if (aq != null) {
             logger.log(Level.INFO, "Getting air quality from cache");
             return aq;
@@ -41,7 +42,7 @@ public class AirQualityService {
         return aq;
     }
 
-    public HashMap<String, Integer> getStatistics() {
+    public Map<String, Integer> getStatistics() {
         HashMap<String, Integer> stats = new HashMap<>();
 
         stats.put("count", cache.getCount());

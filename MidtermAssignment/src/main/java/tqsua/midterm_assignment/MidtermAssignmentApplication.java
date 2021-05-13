@@ -10,12 +10,12 @@ import tqsua.midterm_assignment.external_api.ExternalAPI;
 public class MidtermAssignmentApplication {
 
 	@Bean
-	Cache Cache() {
+	Cache cache() {
 		return new Cache();
 	}
 
 	@Bean
-	ExternalAPI API() {
+	ExternalAPI api() {
 		return new ExternalAPI();
 	}
 

@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = MidtermAssignmentApplication.class)
 @AutoConfigureMockMvc
-public class AirQualityController_IntegrationTest {
+class AirQualityController_IntegrationTest {
     @Autowired
     private MockMvc mvc;
 
@@ -31,7 +31,7 @@ public class AirQualityController_IntegrationTest {
     }
 
     @Test
-    public void givenAirQuality_whenGetAirQuality_thenReturnAirQualityObject() throws Exception {
+    void givenAirQuality_whenGetAirQuality_thenReturnAirQualityObject() throws Exception {
         AirQuality aq = new AirQuality(30, 40, 41, "p1", "p2");
         cache.setAirQuality("USA", "Alaska", "City1", aq);
 
@@ -44,12 +44,12 @@ public class AirQualityController_IntegrationTest {
     }
 
     @Test
-    public void whenGetNonexistentAirQuality_thenReturnNotFound() throws Exception{
+    void whenGetNonexistentAirQuality_thenReturnNotFound() throws Exception{
         mvc.perform(get("/api/airquality?country=A&state=B&city=C").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNotFound());
     }
 
     @Test
-    public void whenGetStatistics_thenReturnStatistics() throws Exception {
+    void whenGetStatistics_thenReturnStatistics() throws Exception {
         cache.setCount(3);
         cache.setHits(1);
         cache.setMisses(2);

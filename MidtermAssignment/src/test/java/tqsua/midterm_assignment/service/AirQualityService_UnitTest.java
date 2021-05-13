@@ -15,7 +15,7 @@ import tqsua.midterm_assignment.model.AirQuality;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @ExtendWith(MockitoExtension.class)
-public class AirQualityService_UnitTest {
+class AirQualityService_UnitTest {
     @Mock(lenient = true)
     private Cache cache;
 
@@ -26,7 +26,7 @@ public class AirQualityService_UnitTest {
     private AirQualityService service;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         AirQuality aq = new AirQuality(30,40,41,"p1","p2");
         Mockito.when(cache.getAirQuality("France", "Brittany", "Quimper")).thenReturn(aq);
         Mockito.when(api.getAirQuality("France", "Brittany", "Quimper")).thenReturn(aq);
@@ -40,7 +40,7 @@ public class AirQualityService_UnitTest {
     }
 
     @Test
-    public void whenAirQualityExistsInCache_thenItShouldBeFoundOnTheCache() {
+    void whenAirQualityExistsInCache_thenItShouldBeFoundOnTheCache() {
         AirQuality found = service.getAirQualityByCity("France", "Brittany", "Quimper");
         assertThat(found.getHumidity()).isEqualTo(30);
         Mockito.verify(cache, VerificationModeFactory.times(1)).getAirQuality("France", "Brittany", "Quimper");
@@ -48,7 +48,7 @@ public class AirQualityService_UnitTest {
     }
 
     @Test
-    public void whenAirQualityExistsOnlyInExternalAPI_thenItShouldBeFoundOnTheAPI() {
+    void whenAirQualityExistsOnlyInExternalAPI_thenItShouldBeFoundOnTheAPI() {
         AirQuality found = service.getAirQualityByCity("France", "Burgundy", "Burgundy");
         assertThat(found.getHumidity()).isEqualTo(30);
         Mockito.verify(cache, VerificationModeFactory.times(1)).getAirQuality("France", "Burgundy", "Burgundy");
@@ -56,7 +56,7 @@ public class AirQualityService_UnitTest {
     }
 
     @Test
-    public void whenAirQualityDoesNotExist_thenItShouldNotBeFound() {
+    void whenAirQualityDoesNotExist_thenItShouldNotBeFound() {
         AirQuality found = service.getAirQualityByCity("USA","Alaska", "City1");
         assertThat(found).isNull();
         Mockito.verify(cache, VerificationModeFactory.times(1)).getAirQuality("USA", "Alaska", "City1");
@@ -64,7 +64,7 @@ public class AirQualityService_UnitTest {
     }
 
     @Test
-    public void whenGettingStatistics_thenItShouldReturnStatistics() {
+    void whenGettingStatistics_thenItShouldReturnStatistics() {
         assertThat(service.getStatistics().get("count")).isEqualTo(3);
         assertThat(service.getStatistics().get("misses")).isEqualTo(2);
         assertThat(service.getStatistics().get("hits")).isEqualTo(1);

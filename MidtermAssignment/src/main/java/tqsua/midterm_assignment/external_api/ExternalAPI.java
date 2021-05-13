@@ -31,8 +31,8 @@ public class ExternalAPI {
         try {
             JSONArray json = (JSONArray) new JSONObject(this.restTemplate.getForObject(baseUrl+"countries?" + token, String.class)).get("data");
 
-            String[] countries = new String[json.length()];
-            for (int i = 0; i<json.length(); i++) {
+            var countries = new String[json.length()];
+            for (var i = 0; i<json.length(); i++) {
                 countries[i] = (String) ((JSONObject)json.get(i)).get("country");
             }
             return countries;
@@ -47,8 +47,8 @@ public class ExternalAPI {
         try {
             JSONArray json = (JSONArray) new JSONObject(this.restTemplate.getForObject(baseUrl+"states?country=" + country + "&" + token, String.class)).get("data");
 
-            String[] states = new String[json.length()];
-            for (int i = 0; i<json.length(); i++) {
+            var states = new String[json.length()];
+            for (var i = 0; i<json.length(); i++) {
                 states[i] = (String) ((JSONObject)json.get(i)).get("state");
             }
 
@@ -64,8 +64,8 @@ public class ExternalAPI {
         try {
             JSONArray json = (JSONArray) new JSONObject(this.restTemplate.getForObject(baseUrl+"cities?state=" + state + "&country=" + country + "&" + token, String.class)).get("data");
 
-            String[] cities = new String[json.length()];
-            for (int i = 0; i<json.length(); i++) {
+            var cities = new String[json.length()];
+            for (var i = 0; i<json.length(); i++) {
                 cities[i] = (String) ((JSONObject)json.get(i)).get("city");
             }
 
@@ -85,9 +85,8 @@ public class ExternalAPI {
             JSONObject weather = (JSONObject)json.get("weather");
             JSONObject pollution = (JSONObject)json.get("pollution");
 
-            AirQuality aq = new AirQuality((Integer) weather.get("hu"), (Integer) pollution.get("aqius"), (Integer) pollution.get("aqicn"),
-                    polluentMap.get((String) pollution.get("mainus")), polluentMap.get((String) pollution.get("maincn")));
-            return aq;
+            return new AirQuality((Integer) weather.get("hu"), (Integer) pollution.get("aqius"), (Integer) pollution.get("aqicn"),
+                    polluentMap.get(pollution.get("mainus")), polluentMap.get(pollution.get("maincn")));
         } catch (Exception e) {
             logger.log(Level.WARNING, e.getMessage());
             return null;

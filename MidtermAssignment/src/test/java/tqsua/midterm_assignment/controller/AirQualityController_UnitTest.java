@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(AirQualityController.class)
-public class AirQualityController_UnitTest {
+class AirQualityController_UnitTest {
     @Autowired
     private MockMvc mvc;
 
@@ -29,7 +29,7 @@ public class AirQualityController_UnitTest {
     private AirQualityService service;
 
     @Test
-    public void givenAirQuality_whenGetAirQuality_thenReturnAirQualityObject() throws Exception {
+    void givenAirQuality_whenGetAirQuality_thenReturnAirQualityObject() throws Exception {
         AirQuality aq = new AirQuality(30, 40, 41, "p1", "p1");
 
         given(service.getAirQualityByCity("USA", "Alaska", "City1")).willReturn(aq);
@@ -44,7 +44,7 @@ public class AirQualityController_UnitTest {
     }
 
     @Test
-    public void whenGetNonexistentAirQuality_thenReturnNotFound() throws Exception{
+    void whenGetNonexistentAirQuality_thenReturnNotFound() throws Exception{
         given(service.getAirQualityByCity("A", "B", "C")).willReturn(null);
 
         mvc.perform(get("/api/airquality?country=A&state=B&city=C").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNotFound());
@@ -52,7 +52,7 @@ public class AirQualityController_UnitTest {
     }
 
     @Test
-    public void whenGetStatistics_thenReturnStatistics() throws Exception {
+    void whenGetStatistics_thenReturnStatistics() throws Exception {
         HashMap<String, Integer> stats = new HashMap<>();
         stats.put("count", 3);
         stats.put("hits", 1);

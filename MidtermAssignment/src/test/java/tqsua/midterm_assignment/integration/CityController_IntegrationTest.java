@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = MidtermAssignmentApplication.class)
 @AutoConfigureMockMvc
-public class CityController_IntegrationTest {
+class CityController_IntegrationTest {
     @Autowired
     private MockMvc mvc;
 
@@ -31,7 +31,7 @@ public class CityController_IntegrationTest {
     }
 
     @Test
-    public void givenCountries_whenGetCountries_thenReturnJsonArray() throws Exception {
+    void givenCountries_whenGetCountries_thenReturnJsonArray() throws Exception {
         String[] countries = new String[]{"USA", "France"};
         cache.setCountries(countries);
 
@@ -40,7 +40,7 @@ public class CityController_IntegrationTest {
     }
 
     @Test
-    public void givenStates_whenGetStates_thenReturnJsonArray() throws Exception {
+    void givenStates_whenGetStates_thenReturnJsonArray() throws Exception {
         String[] states = new String[]{"Alaska", "Kansas"};
         cache.setStates("USA", states);
 
@@ -49,12 +49,12 @@ public class CityController_IntegrationTest {
     }
 
     @Test
-    public void whenGetStatesFromNonexistentCountry_thenReturnNotFound() throws Exception {
+    void whenGetStatesFromNonexistentCountry_thenReturnNotFound() throws Exception {
         mvc.perform(get("/api/states?country=does-not-exist").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNotFound());
     }
 
     @Test
-    public void givenCities_whenGetCities_thenReturnJsonArray() throws Exception {
+    void givenCities_whenGetCities_thenReturnJsonArray() throws Exception {
         String[] cities = new String[]{"City1", "City2"};
         cache.setCities("USA", "Alaska", cities);
 
@@ -63,7 +63,7 @@ public class CityController_IntegrationTest {
     }
 
     @Test
-    public void whenGetCitiesFromNonexistentCountryOrState_thenReturnNotFound() throws Exception {
+    void whenGetCitiesFromNonexistentCountryOrState_thenReturnNotFound() throws Exception {
         mvc.perform(get("/api/cities?country=does-not-exist&state=not-exists").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNotFound());
     }
 }

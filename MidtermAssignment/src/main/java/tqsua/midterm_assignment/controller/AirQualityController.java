@@ -7,7 +7,7 @@ import org.springframework.web.server.ResponseStatusException;
 import tqsua.midterm_assignment.model.AirQuality;
 import tqsua.midterm_assignment.service.AirQualityService;
 
-import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -19,13 +19,13 @@ public class AirQualityController {
     @GetMapping("/airquality")
     public AirQuality getAirQualityByCity(@RequestParam(name="country") String country,
                     @RequestParam(name="state") String state, @RequestParam(name="city") String city) {
-        AirQuality aq = service.getAirQualityByCity(country, state, city);
+        var aq = service.getAirQualityByCity(country, state, city);
         if (aq== null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return aq;
     }
 
     @GetMapping("/statistics")
-    public HashMap<String, Integer> getStatistics() {
+    public Map<String, Integer> getStatistics() {
         return service.getStatistics();
     }
 }

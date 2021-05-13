@@ -14,7 +14,7 @@ import tqsua.midterm_assignment.external_api.ExternalAPI;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @ExtendWith(MockitoExtension.class)
-public class CityService_UnitTest {
+class CityService_UnitTest {
     @Mock(lenient = true)
     private Cache cache;
 
@@ -43,7 +43,7 @@ public class CityService_UnitTest {
     }
 
     @Test
-    public void whenCountriesExistInCache_thenTheyShouldBeFoundOnTheCache() {
+    void whenCountriesExistInCache_thenTheyShouldBeFoundOnTheCache() {
         String[] countries = new String[]{"USA", "France"};
         Mockito.when(cache.getCountries()).thenReturn(countries);
         Mockito.when(api.getCountries()).thenReturn(countries);
@@ -55,7 +55,7 @@ public class CityService_UnitTest {
     }
 
     @Test
-    public void whenCountriesExistOnlyInExternalAPI_thenTheyShouldBeFoundOnTheAPI() {
+    void whenCountriesExistOnlyInExternalAPI_thenTheyShouldBeFoundOnTheAPI() {
         String[] countries = new String[]{"USA", "France"};
         Mockito.when(cache.getCountries()).thenReturn(new String[0]);
         Mockito.when(api.getCountries()).thenReturn(countries);
@@ -67,7 +67,7 @@ public class CityService_UnitTest {
     }
 
     @Test
-    public void whenStatesExistInCache_thenTheyShouldBeFoundOnTheCache() {
+    void whenStatesExistInCache_thenTheyShouldBeFoundOnTheCache() {
         String[] found = service.getStates("USA");
         assertThat(found).hasSize(2).contains("Alaska", "Kansas");
         Mockito.verify(cache, VerificationModeFactory.times(1)).getStates("USA");
@@ -75,7 +75,7 @@ public class CityService_UnitTest {
     }
 
     @Test
-    public void whenStatesExistOnlyInExternalAPI_thenTheyShouldBeFoundOnTheAPI() {
+    void whenStatesExistOnlyInExternalAPI_thenTheyShouldBeFoundOnTheAPI() {
         String[] found = service.getStates("France");
         assertThat(found).hasSize(2).contains("Burgundy", "Brittany");
         Mockito.verify(cache, VerificationModeFactory.times(1)).getStates("France");
@@ -83,7 +83,7 @@ public class CityService_UnitTest {
     }
 
     @Test
-    public void whenCitiesExistInCache_thenTheyShouldBeFoundOnTheCache() {
+    void whenCitiesExistInCache_thenTheyShouldBeFoundOnTheCache() {
         String[] found = service.getCities("USA", "Alaska");
         assertThat(found).hasSize(2).contains("City1", "City2");
         Mockito.verify(cache, VerificationModeFactory.times(1)).getCities("USA", "Alaska");
@@ -91,7 +91,7 @@ public class CityService_UnitTest {
     }
 
     @Test
-    public void whenCitiesExistOnlyInExternalAPI_thenTheyShouldBeFoundOnTheAPI() {
+    void whenCitiesExistOnlyInExternalAPI_thenTheyShouldBeFoundOnTheAPI() {
         String[] found = service.getCities("France", "Brittany");
         assertThat(found).hasSize(2).contains("City1", "City2");
         Mockito.verify(cache, VerificationModeFactory.times(1)).getCities("France", "Brittany");
@@ -99,17 +99,17 @@ public class CityService_UnitTest {
     }
 
     @Test
-    public void whenCountryDoesNotExist_thenStatesShouldNotBeFound() {
+    void whenCountryDoesNotExist_thenStatesShouldNotBeFound() {
         String[] found = service.getStates("NotReal");
-        assertThat(found).hasSize(0);
+        assertThat(found).isEmpty();
         Mockito.verify(cache, VerificationModeFactory.times(1)).getStates("NotReal");
         Mockito.verify(api, VerificationModeFactory.times(1)).getStates("NotReal");
     }
 
     @Test
-    public void whenStateOrCountryDoesNotExist_thenCitiesShouldNotBeFound() {
+    void whenStateOrCountryDoesNotExist_thenCitiesShouldNotBeFound() {
         String[] found = service.getCities("NotReal", "A");
-        assertThat(found).hasSize(0);
+        assertThat(found).isEmpty();
         Mockito.verify(cache, VerificationModeFactory.times(1)).getCities("NotReal", "A");
         Mockito.verify(api, VerificationModeFactory.times(1)).getCities("NotReal", "A");
     }

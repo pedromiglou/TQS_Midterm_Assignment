@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(CityController.class)
-public class CityController_UnitTest {
+class CityController_UnitTest {
     @Autowired
     private MockMvc mvc;
 
@@ -25,7 +25,7 @@ public class CityController_UnitTest {
     private CityService service;
 
     @Test
-    public void givenCountries_whenGetCountries_thenReturnJsonArray() throws Exception {
+    void givenCountries_whenGetCountries_thenReturnJsonArray() throws Exception {
         String[] countries = new String[]{"USA", "France"};
 
         given(service.getCountries()).willReturn(countries);
@@ -36,7 +36,7 @@ public class CityController_UnitTest {
     }
 
     @Test
-    public void givenStates_whenGetStates_thenReturnJsonArray() throws Exception {
+    void givenStates_whenGetStates_thenReturnJsonArray() throws Exception {
         String[] states = new String[]{"Alaska", "Kansas"};
 
         given(service.getStates("USA")).willReturn(states);
@@ -47,7 +47,7 @@ public class CityController_UnitTest {
     }
 
     @Test
-    public void whenGetStatesFromNonexistentCountry_thenReturnNotFound() throws Exception {
+    void whenGetStatesFromNonexistentCountry_thenReturnNotFound() throws Exception {
         given(service.getStates("-does-not-exist-")).willReturn(new String[0]);
 
         mvc.perform(get("/api/states?country=-does-not-exist-").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNotFound());
@@ -55,7 +55,7 @@ public class CityController_UnitTest {
     }
 
     @Test
-    public void givenCities_whenGetCities_thenReturnJsonArray() throws Exception {
+    void givenCities_whenGetCities_thenReturnJsonArray() throws Exception {
         String[] cities = new String[]{"City1", "City2"};
         given(service.getCities("USA", "Alaska")).willReturn(cities);
 
@@ -65,7 +65,7 @@ public class CityController_UnitTest {
     }
 
     @Test
-    public void whenGetCitiesFromNonexistentCountryOrState_thenReturnNotFound() throws Exception {
+    void whenGetCitiesFromNonexistentCountryOrState_thenReturnNotFound() throws Exception {
         given(service.getCities("-does-not-exist-", "not-exists")).willReturn(new String[0]);
 
         mvc.perform(get("/api/cities?country=-does-not-exist-&state=not-exists").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNotFound());
