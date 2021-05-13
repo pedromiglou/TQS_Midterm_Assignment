@@ -2,6 +2,7 @@ package tqsua.midterm_assignment.website;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.junit.platform.engine.Cucumber;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 import static org.hamcrest.CoreMatchers.startsWith;
@@ -12,7 +13,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@Cucumber
+@SpringBootTest
 public class Website_Steps {
   private WebDriver webDriver;
 

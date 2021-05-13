@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 public class ExternalAPI {
     private String baseUrl = "https://api.airvisual.com/v2/";
-    private String token = "6b74a48a-8d34-43f6-92a2-bf903603543c";
+    private String token = "key=6b74a48a-8d34-43f6-92a2-bf903603543c";
 
     private RestTemplate restTemplate = new RestTemplate();
     private Logger logger;
@@ -28,7 +28,7 @@ public class ExternalAPI {
 
     public String[] getCountries() {
         try {
-            JSONArray json = (JSONArray) new JSONObject(this.restTemplate.getForObject(baseUrl+"countries?key=" + token, String.class)).get("data");
+            JSONArray json = (JSONArray) new JSONObject(this.restTemplate.getForObject(baseUrl+"countries?" + token, String.class)).get("data");
 
             String[] countries = new String[json.length()];
             for (int i = 0; i<json.length(); i++) {
@@ -43,7 +43,7 @@ public class ExternalAPI {
 
     public String[] getStates(String country) {
         try {
-            JSONArray json = (JSONArray) new JSONObject(this.restTemplate.getForObject(baseUrl+"states?country=" + country + "&key=" + token, String.class)).get("data");
+            JSONArray json = (JSONArray) new JSONObject(this.restTemplate.getForObject(baseUrl+"states?country=" + country + "&" + token, String.class)).get("data");
 
             String[] states = new String[json.length()];
             for (int i = 0; i<json.length(); i++) {
@@ -59,7 +59,7 @@ public class ExternalAPI {
 
     public String[] getCities(String country, String state) {
         try {
-            JSONArray json = (JSONArray) new JSONObject(this.restTemplate.getForObject(baseUrl+"cities?state=" + state + "&country=" + country + "&key=" + token, String.class)).get("data");
+            JSONArray json = (JSONArray) new JSONObject(this.restTemplate.getForObject(baseUrl+"cities?state=" + state + "&country=" + country + "&" + token, String.class)).get("data");
 
             String[] cities = new String[json.length()];
             for (int i = 0; i<json.length(); i++) {
@@ -76,13 +76,13 @@ public class ExternalAPI {
     public AirQuality getAirQuality(String country, String state, String city) {
         try {
             JSONObject json = (JSONObject) ((JSONObject) new JSONObject(this.restTemplate.getForObject(baseUrl+"city?city=" + city +
-                    "&state=" + state + "&country=" + country + "&key=" + token, String.class)).get("data")).get("current");
+                    "&state=" + state + "&country=" + country + "&" + token, String.class)).get("data")).get("current");
 
-            AirQuality aq = new AirQuality((Integer) ((JSONObject)json.get("weather")).get("hu"),
-                    (Integer) ((JSONObject)json.get("pollution")).get("aqius"),
-                    (Integer) ((JSONObject)json.get("pollution")).get("aqicn"),
-                    polluentMap.get((String) ((JSONObject)json.get("pollution")).get("mainus")),
-                    polluentMap.get((String) ((JSONObject)json.get("pollution")).get("maincn")));
+            JSONObject weather = (JSONObject)json.get("weather");
+            JSONObject pollution = (JSONObject)json.get("pollution");
+
+            AirQuality aq = new AirQuality((Integer) weather.get("hu"), (Integer) pollution.get("aqius"), (Integer) pollution.get("aqicn"),
+                    polluentMap.get((String) pollution.get("mainus")), polluentMap.get((String) pollution.get("maincn")));
             return aq;
         } catch (Exception e) {
             return null;
