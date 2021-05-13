@@ -19,6 +19,8 @@
 		<cucumber.version>6.10.3</cucumber.version>
 		<selenium-java.version>3.141.59</selenium-java.version>
 		<webdrivermanager.version>4.4.0</webdrivermanager.version>
+		<sonar.projectKey>Miglou_tqsmidtermassignment</sonar.projectKey>
+		<sonar.organization>miglou</sonar.organization>
 	</properties>
 	<dependencies>
 		<dependency>
