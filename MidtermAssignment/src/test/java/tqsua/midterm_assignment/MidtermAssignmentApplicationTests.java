@@ -6,10 +6,4 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @Cucumber
 @SpringBootTest
-public class MidtermAssignmentApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
-
-}
+public class MidtermAssignmentApplicationTests {}
