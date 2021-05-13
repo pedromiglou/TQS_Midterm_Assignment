@@ -8,6 +8,7 @@ sonarcloud-check:
     paths:
       - .sonar/cache
   script:
+    - cd MidtermAssignment
     - mvn verify sonar:sonar
   only:
     - merge_requests
