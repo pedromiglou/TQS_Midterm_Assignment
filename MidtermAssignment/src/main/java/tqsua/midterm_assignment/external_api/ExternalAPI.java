@@ -43,7 +43,6 @@ public class ExternalAPI {
 
     public String[] getStates(String country) {
         try {
-            assert country.length()>0;
             JSONArray json = (JSONArray) new JSONObject(this.restTemplate.getForObject(baseUrl+"states?country=" + country + "&key=" + token, String.class)).get("data");
 
             String[] states = new String[json.length()];
