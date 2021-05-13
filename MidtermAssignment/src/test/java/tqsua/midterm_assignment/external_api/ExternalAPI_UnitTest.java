@@ -18,8 +18,8 @@ public class ExternalAPI_UnitTest {
     }
 
     @Test
-    public void whenGetStatesFromInvalidCountry_thenReturnNull() {
-        assertThat(api.getStates("does_not_exist")).isNull();
+    public void whenGetStatesFromInvalidCountry_thenReturnEmpty() {
+        assertThat(api.getStates("does_not_exist")).hasSize(0);
     }
 
     @Test
@@ -28,7 +28,7 @@ public class ExternalAPI_UnitTest {
     }
 
     @Test
-    public void whenGetCitiesFromInvalidState_thenReturnNull() {
-        assertThat(api.getCities("does_not_exist","does_not_exist_either")).isNull();
+    public void whenGetCitiesFromInvalidState_thenReturnEmpty() {
+        assertThat(api.getCities("does_not_exist","does_not_exist_either")).hasSize(0);
     }
 }

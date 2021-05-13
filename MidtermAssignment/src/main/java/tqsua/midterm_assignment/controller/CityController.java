@@ -16,21 +16,21 @@ public class CityController {
     @GetMapping("/countries")
     public String[] getCountries() {
         String[] countries = service.getCountries();
-        if (countries==null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        if (countries.length==0) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return countries;
     }
 
     @GetMapping("/states")
     public String[] getStates(@RequestParam("country") String country) {
         String[] states = service.getStates(country);
-        if (states==null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        if (states.length==0) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return states;
     }
 
     @GetMapping("/cities")
     public String[] getCities(@RequestParam("country") String country, @RequestParam("state") String state) {
         String[] cities = service.getCities(country, state);
-        if (cities==null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        if (cities.length==0) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return cities;
     }
 }

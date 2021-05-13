@@ -25,7 +25,7 @@ public class AirQualityController {
     }
 
     @GetMapping("/statistics")
-    public HashMap getStatistics() {
+    public HashMap<String, Integer> getStatistics() {
         return service.getStatistics();
     }
 }

@@ -2,7 +2,6 @@ package tqsua.midterm_assignment.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import tqsua.midterm_assignment.cache.Cache;
 import tqsua.midterm_assignment.external_api.ExternalAPI;
 import tqsua.midterm_assignment.model.AirQuality;
@@ -17,10 +16,7 @@ public class AirQualityService {
 
     private Cache cache;
     private ExternalAPI api;
-    private String baseUrl = "https://api.airvisual.com/v2/";
-    private String token = "6b74a48a-8d34-43f6-92a2-bf903603543c";
 
-    private RestTemplate restTemplate = new RestTemplate();
     private Logger logger;
 
     @Autowired
@@ -45,7 +41,7 @@ public class AirQualityService {
         return aq;
     }
 
-    public HashMap getStatistics() {
+    public HashMap<String, Integer> getStatistics() {
         HashMap<String, Integer> stats = new HashMap<>();
 
         stats.put("count", cache.getCount());

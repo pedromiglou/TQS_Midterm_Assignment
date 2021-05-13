@@ -28,18 +28,18 @@ public class CityService_UnitTest {
     public void setUp() {
         Mockito.when(cache.getStates("USA")).thenReturn(new String[]{"Alaska", "Kansas"});
         Mockito.when(api.getStates("USA")).thenReturn(new String[]{"Alaska", "Kansas"});
-        Mockito.when(cache.getStates("France")).thenReturn(null);
+        Mockito.when(cache.getStates("France")).thenReturn(new String[0]);
         Mockito.when(api.getStates("France")).thenReturn(new String[]{"Brittany", "Burgundy"});
 
         Mockito.when(cache.getCities("USA", "Alaska")).thenReturn(new String[]{"City1", "City2"});
         Mockito.when(api.getCities("USA", "Alaska")).thenReturn(new String[]{"City1", "City2"});
-        Mockito.when(cache.getCities("France", "Brittany")).thenReturn(null);
+        Mockito.when(cache.getCities("France", "Brittany")).thenReturn(new String[0]);
         Mockito.when(api.getCities("France", "Brittany")).thenReturn(new String[]{"City1", "City2"});
 
-        Mockito.when(cache.getStates("NotReal")).thenReturn(null);
-        Mockito.when(api.getStates("NotReal")).thenReturn(null);
-        Mockito.when(cache.getCities("NotReal","A")).thenReturn(null);
-        Mockito.when(api.getCities("NotReal", "A")).thenReturn(null);
+        Mockito.when(cache.getStates("NotReal")).thenReturn(new String[0]);
+        Mockito.when(api.getStates("NotReal")).thenReturn(new String[0]);
+        Mockito.when(cache.getCities("NotReal","A")).thenReturn(new String[0]);
+        Mockito.when(api.getCities("NotReal", "A")).thenReturn(new String[0]);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class CityService_UnitTest {
     @Test
     public void whenCountriesExistOnlyInExternalAPI_thenTheyShouldBeFoundOnTheAPI() {
         String[] countries = new String[]{"USA", "France"};
-        Mockito.when(cache.getCountries()).thenReturn(null);
+        Mockito.when(cache.getCountries()).thenReturn(new String[0]);
         Mockito.when(api.getCountries()).thenReturn(countries);
 
         String[] found = service.getCountries();
@@ -101,7 +101,7 @@ public class CityService_UnitTest {
     @Test
     public void whenCountryDoesNotExist_thenStatesShouldNotBeFound() {
         String[] found = service.getStates("NotReal");
-        assertThat(found).isNull();
+        assertThat(found).hasSize(0);
         Mockito.verify(cache, VerificationModeFactory.times(1)).getStates("NotReal");
         Mockito.verify(api, VerificationModeFactory.times(1)).getStates("NotReal");
     }
@@ -109,7 +109,7 @@ public class CityService_UnitTest {
     @Test
     public void whenStateOrCountryDoesNotExist_thenCitiesShouldNotBeFound() {
         String[] found = service.getCities("NotReal", "A");
-        assertThat(found).isNull();
+        assertThat(found).hasSize(0);
         Mockito.verify(cache, VerificationModeFactory.times(1)).getCities("NotReal", "A");
         Mockito.verify(api, VerificationModeFactory.times(1)).getCities("NotReal", "A");
     }

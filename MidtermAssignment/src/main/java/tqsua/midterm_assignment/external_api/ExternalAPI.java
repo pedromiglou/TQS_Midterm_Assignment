@@ -6,6 +6,7 @@ import org.springframework.web.client.RestTemplate;
 import tqsua.midterm_assignment.model.AirQuality;
 
 import java.util.HashMap;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ExternalAPI {
@@ -36,7 +37,8 @@ public class ExternalAPI {
             }
             return countries;
         } catch (Exception e) {
-            return null;
+            logger.log(Level.WARNING, e.getMessage());
+            return new String[0];
         }
 
     }
@@ -52,7 +54,8 @@ public class ExternalAPI {
 
             return states;
         } catch (Exception e) {
-            return null;
+            logger.log(Level.WARNING, e.getMessage());
+            return new String[0];
         }
 
     }
@@ -68,7 +71,8 @@ public class ExternalAPI {
 
             return cities;
         } catch (Exception e) {
-            return null;
+            logger.log(Level.WARNING, e.getMessage());
+            return new String[0];
         }
 
     }
@@ -85,6 +89,7 @@ public class ExternalAPI {
                     polluentMap.get((String) pollution.get("mainus")), polluentMap.get((String) pollution.get("maincn")));
             return aq;
         } catch (Exception e) {
+            logger.log(Level.WARNING, e.getMessage());
             return null;
         }
 

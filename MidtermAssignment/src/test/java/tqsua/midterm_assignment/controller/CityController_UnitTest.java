@@ -48,7 +48,7 @@ public class CityController_UnitTest {
 
     @Test
     public void whenGetStatesFromNonexistentCountry_thenReturnNotFound() throws Exception {
-        given(service.getStates("-does-not-exist-")).willReturn(null);
+        given(service.getStates("-does-not-exist-")).willReturn(new String[0]);
 
         mvc.perform(get("/api/states?country=-does-not-exist-").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNotFound());
         verify(service, VerificationModeFactory.times(1)).getStates("-does-not-exist-");
@@ -66,7 +66,7 @@ public class CityController_UnitTest {
 
     @Test
     public void whenGetCitiesFromNonexistentCountryOrState_thenReturnNotFound() throws Exception {
-        given(service.getCities("-does-not-exist-", "not-exists")).willReturn(null);
+        given(service.getCities("-does-not-exist-", "not-exists")).willReturn(new String[0]);
 
         mvc.perform(get("/api/cities?country=-does-not-exist-&state=not-exists").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNotFound());
         verify(service, VerificationModeFactory.times(1)).getCities("-does-not-exist-", "not-exists");

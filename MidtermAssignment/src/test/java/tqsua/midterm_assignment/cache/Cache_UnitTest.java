@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tqsua.midterm_assignment.model.AirQuality;
 
+import java.time.Duration;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Cache_UnitTest {
@@ -24,7 +26,7 @@ public class Cache_UnitTest {
     }
 
     @Test
-    public void whenGetInvalidAirQuality_thenReturnNull() {
+    public void whenGetInvalidAirQuality_thenReturnEmpty() {
         AirQuality found = cache.getAirQuality("I","N", "V");
         assertThat(found).isNull();
     }
@@ -60,28 +62,28 @@ public class Cache_UnitTest {
     }
 
     @Test
-    public void whenGettingCountriesBeforeSetting_thenReturnNull() {
-        assertThat(cache.getCountries()).isNull();
+    public void whenGettingCountriesBeforeSetting_thenReturnEmpty() {
+        assertThat(cache.getCountries()).hasSize(0);
     }
 
     @Test
-    public void whenGettingStatesWithUnknownCountry_thenReturnNull() {
+    public void whenGettingStatesWithUnknownCountry_thenReturnEmpty() {
         //without inserts
-        assertThat(cache.getStates("A")).isNull();
+        assertThat(cache.getStates("A")).hasSize(0);
 
         //with inserts
         cache.setStates("USA", new String[]{"Kansas","Alaska"});
-        assertThat(cache.getStates("A")).isNull();
+        assertThat(cache.getStates("A")).hasSize(0);
     }
 
     @Test
-    public void whenGettingCitiesWithUnknownState_thenReturnNull() {
+    public void whenGettingCitiesWithUnknownState_thenReturnEmpty() {
         //without inserts
-        assertThat(cache.getCities("A","B")).isNull();
+        assertThat(cache.getCities("A","B")).hasSize(0);
 
         //with inserts
         cache.setCities("USA", "Alaska", new String[]{"City1","City2"});
-        assertThat(cache.getCities("A","B")).isNull();
+        assertThat(cache.getCities("A","B")).hasSize(0);
     }
 
     @Test
