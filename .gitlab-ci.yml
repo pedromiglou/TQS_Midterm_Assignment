@@ -1,7 +1,13 @@
+stages:
+    - sonarcloud-check
+    - production-api
+    - production-webpage
+
 variables:
   SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
   GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
 sonarcloud-check:
+  stage: sonarcloud-check
   image: maven:3.6.3-jdk-11
   cache:
     key: "${CI_JOB_NAME}"
@@ -13,3 +19,26 @@ sonarcloud-check:
   only:
     - merge_requests
     - master
+
+production-api:
+  type: deploy
+  stage: production-api
+  image: maven:3.6.3-jdk-11
+  script:
+    - cd MidtermAssignment
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APP_API --api-key=$HEROKU_API_KEY
+  only:
+    - master
+
+production-webpage:
+    type: deploy
+    stage: production-webpage
+    image: ruby:latest
+    script:
+        - cd angular-website
+        - dpl --provider=heroku --app=$HEROKU_APP_WEBSITE --api-key=$HEROKU_API_KEY
+    only:
+        - master
