@@ -13,6 +13,7 @@ public class Cache {
     private int hits = 0;
     private int count = 0;
 
+    private HashMap<String, HashMap<String,String[]>> cities = new HashMap<>();
     private HashMap<String, HashMap<String, HashMap<String, AirQuality>>> map = new HashMap<>();
     private Logger logger;
 
@@ -43,8 +44,8 @@ public class Cache {
     }
 
     public String[] getCountries() {
-        if (map.size()>0) {
-            return map.keySet().stream().toArray(x -> new String[x]);
+        if (cities.size()>0) {
+            return cities.keySet().stream().toArray(x -> new String[x]);
         } else {
             return new String[0];
         }
@@ -52,36 +53,35 @@ public class Cache {
 
     public void setCountries(String[] countries) {
         for (String country: countries) {
-            map.putIfAbsent(country, new HashMap<>());
+            cities.put(country, new HashMap<>());
         }
     }
 
     public String[] getStates(String country) {
-        if (map.containsKey(country) && map.get(country).size()>0) {
-            return map.get(country).keySet().stream().toArray(x -> new String[x]);
+        if (cities.containsKey(country) && cities.get(country).size()>0) {
+            return cities.get(country).keySet().stream().toArray(x -> new String[x]);
         }
         return new String[0];
     }
 
     public String[] getCities(String country, String state) {
-        if (map.containsKey(country) && map.get(country).containsKey(state) && map.get(country).get(state).size()>0) {
-            return map.get(country).get(state).keySet().stream().toArray(x -> new String[x]);
+        if (cities.containsKey(country) && cities.get(country).containsKey(state) && cities.get(country).get(state).length>0) {
+            return cities.get(country).get(state);
         }
         return new String[0];
     }
 
     public void setStates(String country, String[] states) {
-        map.putIfAbsent(country, new HashMap<>());
-        for (String state: states) {
-            map.get(country).put(state, new HashMap<>());
+        if (cities.containsKey(country)) {
+            for (String state: states) {
+                cities.get(country).put(state, new String[0]);
+            }
         }
     }
 
-    public void setCities(String country, String state, String[] cities) {
-        map.putIfAbsent(country, new HashMap<>());
-        map.get(country).putIfAbsent(state, new HashMap<>());
-        for (String city: cities) {
-            map.get(country).get(state).put(city, null);
+    public void setCities(String country, String state, String[] names) {
+        if (cities.containsKey(country) && cities.get(country).containsKey(state)) {
+            cities.get(country).put(state, names);
         }
     }
 

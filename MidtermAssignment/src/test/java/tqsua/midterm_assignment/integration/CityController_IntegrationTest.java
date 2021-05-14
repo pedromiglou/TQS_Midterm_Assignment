@@ -42,6 +42,7 @@ class CityController_IntegrationTest {
     @Test
     void givenStates_whenGetStates_thenReturnJsonArray() throws Exception {
         String[] states = new String[]{"Alaska", "Kansas"};
+        cache.setCountries(new String[]{"USA"});
         cache.setStates("USA", states);
 
         mvc.perform(get("/api/states?country=USA").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
@@ -56,6 +57,8 @@ class CityController_IntegrationTest {
     @Test
     void givenCities_whenGetCities_thenReturnJsonArray() throws Exception {
         String[] cities = new String[]{"City1", "City2"};
+        cache.setCountries(new String[]{"USA"});
+        cache.setStates("USA", new String[]{"Alaska"});
         cache.setCities("USA", "Alaska", cities);
 
         mvc.perform(get("/api/cities?country=USA&state=Alaska").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())

@@ -24,7 +24,7 @@ class Cache_UnitTest {
     }
 
     @Test
-    void whenGetInvalidAirQuality_thenReturnEmpty() {
+    void whenGetInvalidAirQuality_thenReturnNull() {
         AirQuality found = cache.getAirQuality("I","N", "V");
         assertThat(found).isNull();
     }
@@ -49,12 +49,15 @@ class Cache_UnitTest {
 
     @Test
     void whenGivenListOfStates_thenReturnThatList() {
+        cache.setCountries(new String[]{"USA"});
         cache.setStates("USA", new String[]{"Alaska","Kansas"});
         assertThat(cache.getStates("USA")).hasSize(2).contains("Kansas", "Alaska");
     }
 
     @Test
     void whenGivenListOfCities_thenReturnThatList() {
+        cache.setCountries(new String[]{"France"});
+        cache.setStates("France", new String[]{"Brittany"});
         cache.setCities("France", "Brittany", new String[]{"Quimper","City1", "City2"});
         assertThat(cache.getCities("France","Brittany")).hasSize(3).contains("Quimper", "City1", "City2");
     }
