@@ -1,7 +1,7 @@
 Feature: Midterm Assignment Webpage
 
   Scenario: Obtain the air quality of North Pole, Alaska, USA
-    When I navigate to 'http://localhost:4200/'
+    When I navigate to 'https://tqs-air-quality-website.herokuapp.com/'
     And I select the country 'USA'
     And I select the state 'Alaska'
     And I select the city 'North Pole'
@@ -13,7 +13,7 @@ Feature: Midterm Assignment Webpage
     And I should be shown the 'Main pollutant for Chinese AQI'
 
   Scenario: Obtain the API statistics
-    When I navigate to 'http://localhost:4200/'
+    When I navigate to 'https://tqs-air-quality-website.herokuapp.com/'
     And I click the button to get the statistics
     Then I should be shown the API 'Count'
     And I should be shown the API 'Hits'
