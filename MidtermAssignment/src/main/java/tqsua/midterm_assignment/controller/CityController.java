@@ -8,7 +8,7 @@ import tqsua.midterm_assignment.service.CityService;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class CityController {
     @Autowired
     private CityService service;
