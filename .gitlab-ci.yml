@@ -38,6 +38,9 @@ production-webpage:
     stage: production-webpage
     image: ruby:latest
     script:
+        - apt-get update -qy
+    	- apt-get install -y ruby-dev
+    	- gem install dpl
         - cd angular-website
         - dpl --provider=heroku --app=$HEROKU_APP_WEBSITE --api-key=$HEROKU_API_KEY
     only:
